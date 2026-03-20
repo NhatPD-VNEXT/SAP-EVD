@@ -32,7 +32,7 @@ def commit_evidence_to_git(local_folder: str, po_number: str):
     rel_path = os.path.relpath(local_folder, GIT_REPO).replace("\\", "/")
     _git(["add", rel_path])
     _git(["commit", "-m", f"evidence: PO {po_number} created"])
-    _git(["push"])
+    _git(["push", "-u", "origin", "HEAD"])
     print(f"[Git] Pushed evidence folder: {rel_path}")
 
 
