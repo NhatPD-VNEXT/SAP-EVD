@@ -1,50 +1,48 @@
-# SKILL.md for PO Creation on Vnext TDD Environment
+# SKILL.md for PO Update on Vnext TDD Environment
 
-This skill automates the creation of a Purchase Order (PO) in the Vnext TDD environment. It performs the following steps in sequence:
+This skill automates updating a Purchase Order (PO) in the Vnext TDD environment. It handles the following workflow:
 
-1. Calls the script `sap_po_create` located in the script directory.
+1. Calls the `sap_po_update` script with given PO number and quantity parameters.
 2. Waits for the script to complete execution.
-3. Reads the latest log to determine the PO created.
-4. Retrieves the evidence image associated with the PO creation.
-5. Sends the relevant information and image.
+3. Confirms the operation was successful by checking the log.
+4. Retrieves evidence related to the update from the GitHub repository and provides the link.
+
+---
 
 ## Skill Actions
 
 ### Trigger Phrase
-When the user sends the message:
-- "Tạo PO ở môi trường Vnext TDD"
+When the user sends a message like:
+- "Update PO XXXXXXXX với Quantity = XXXXXXX ở môi trường Vnext TDD"
 
 ### Steps to Execute
 
-1. Call the script:
+1. Call the update script with parameters:
    ```shell
-   PS C:\Users\Admin\.openclaw\workspace\script> python sap_po_create.py
+   C:\Users\Admin\.openclaw\workspace\script> python sap_po_update.py --po-number <XXXXXXXXXX> --po-quantity <XXXXXXXX>
    ```
+
+   - Replace `<XXXXXXXXXX>` with the actual PO number.
+   - Replace `<XXXXXXXX>` with the actual PO quantity.
 
 2. Monitor script execution and wait until it completes.
-   - Poll the script state (implementation to handle waiting internally.)
-
-3. Extract details from the most recent log in:
-   ```shell
-   C:\Users\Admin\.openclaw\workspace\log
+3. Fetch the evidence from GitHub at:
    ```
-   - Confirm which PO was successfully created.
-
-4. Collect the relevant evidence image from:
-   ```shell
-   C:\Users\Admin\.openclaw\workspace\evd
+   https://github.com/NhatPD-VNEXT/SAP-EVD/tree/main/evd
    ```
-
-5. Deliver the PO details and image to the channel.
 
 ---
 
 ## Implementation Notes
 
-- The skill must:
-  - Ensure the `sap_po_create` script executes without disruptions.
-  - Identify and parse only the **latest log entry**.
-  - Retrieve the **appropriate image file**.
-- Errors during any step should be clearly communicated.
+- Ensure the `sap_po_update` script runs smoothly and handles parameters correctly.
+- Verify the log to confirm a successful update.
+   - Location: `C:\Users\Admin\.openclaw\workspace\log\`
+- Evidence retrieval:
+   - Reuse the evidence directory path for the GitHub repository organization.
+- Errors during any step (script execution, log checking, etc.) should be reported immediately with details.
 
-To implement this skill, ensure access permissions are in place for the `script`, `log`, and `evd` directories.
+## Logging
+Maintain logs in the workspace:
+- Success and failure messages logged in `C:\Users\Admin\.openclaw\workspace\log\`
+- Evidence GitHub directory: `https://github.com/NhatPD-VNEXT/SAP-EVD/tree/main/evd`.
